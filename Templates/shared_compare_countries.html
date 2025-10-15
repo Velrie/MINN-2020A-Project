@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Compare Countries</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    function toggleSelectAll(source) {
+      const checkboxes = document.querySelectorAll('input[name="country_id"]');
+      checkboxes.forEach(cb => cb.checked = source.checked);
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen p-6">
+  <div class="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold text-indigo-700 text-center mb-8">Compare Countries</h2>
+
+    <!-- Country Selector -->
+    <form method="get" action="{{ url_for('compare_countries', role=role) }}" class="mb-8">
+      <fieldset class="space-y-2">
+        <legend class="text-gray-800 font-semibold mb-3">Select countries to compare:</legend>
+
+        <!-- Select All -->
+        <label class="block font-medium text-sm text-gray-700 mb-2">
+          <input type="checkbox" onclick="toggleSelectAll(this)" class="mr-2 accent-indigo-600">
+          Select All
+        </label>
+
+        <!-- Country Checkboxes -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+          {% for country in countries %}
+            <label class="flex items-center text-gray-700">
+              <input type="checkbox" name="country_id" value="{{ country['CountryID'] }}"
+                     class="mr-2 accent-indigo-600">
+              {{ country['CountryName'] }}
+            </label>
+          {% endfor %}
+        </div>
+      </fieldset>
+
+      <button type="submit"
+              class="mt-6 bg-indigo-600 text-white px-5 py-2 rounded hover:bg-indigo-700 transition">
+        Compare
+      </button>
+    </form>
+
+    <!-- Comparison Table -->
+    {% if selected_countries %}
+      <div class="overflow-x-auto mb-10">
+        <table class="table-auto w-full border-collapse">
+          <thead class="bg-indigo-100 text-indigo-900">
+            <tr>
+              <th class="px-4 py-2 text-left">Country</th>
+              <th class="px-4 py-2 text-left">GDP (Billion USD)</th>
+              <th class="px-4 py-2 text-left">Mining Revenue (Billion USD)</th>
+              <th class="px-4 py-2 text-left">Key Projects</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for country in selected_countries %}
+              <tr class="border-t">
+                <td class="px-4 py-2">{{ country['CountryName'] }}</td>
+                <td class="px-4 py-2">{{ country['GDP_BillionUSD'] }}</td>
+                <td class="px-4 py-2">{{ country['MiningRevenue_BillionUSD'] }}</td>
+                <td class="px-4 py-2">{{ country['KeyProjects'] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Comparison Chart -->
+      {% if comparison_chart %}
+        <div class="mt-10 text-center">
+          <h4 class="text-xl font-semibold text-indigo-800 mb-4">GDP vs Mining Revenue Comparison</h4>
+          <img src="data:image/png;base64,{{ comparison_chart }}" alt="Comparison Chart" class="mx-auto rounded shadow-md">
+        </div>
+      {% endif %}
+    {% endif %}
+
+    <!-- Back Button -->
+    <div class="mt-12 text-center">
+      <a href="{{ url_for('home') }}"
+         class="inline-block bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition">
+        ← Back to Dashboard
+      </a>
+    </div>
+  </div>
+</body>
+</html>
+
+
