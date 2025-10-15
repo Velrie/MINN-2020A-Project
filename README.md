@@ -20,6 +20,7 @@ Matplotlib & Pandas – Data analysis and charting
 Werkzeug – Password security
 
 #Project Structure
+```
 AfricanCriticalMineralsApp/
 │
 ├── app.py
@@ -32,6 +33,8 @@ AfricanCriticalMineralsApp/
 ├── data/
 │   └── minerals.db
 └── .venv/
+```
+
 ## Setup
 
 1. **Install dependencies:**
