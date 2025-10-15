@@ -21,7 +21,6 @@ Werkzeug – Password security
 
 #Project Structure
 AfricanCriticalMineralsApp/
-
 │
 ├── app.py
 ├── templates/
@@ -33,7 +32,6 @@ AfricanCriticalMineralsApp/
 ├── data/
 │   └── minerals.db
 └── .venv/
-
 ## Setup
 
 1. **Install dependencies:**
@@ -49,7 +47,7 @@ AfricanCriticalMineralsApp/
 3. **Access in browser:**
     ```
     http://127.0.0.1:5000
+    
   # License
 This project is open-source and available under the MIT License.
-HTML/CSS/JS – Frontend templates
 
