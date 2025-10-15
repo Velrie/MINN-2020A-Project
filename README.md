@@ -21,6 +21,7 @@ Werkzeug – Password security
 
 #Project Structure
 AfricanCriticalMineralsApp/
+
 │
 ├── app.py
 ├── templates/
