@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Users</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .flash.fade-out {
+            transition: opacity 0.5s ease-out;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="max-w-5xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-bold mb-6 text-center">Manage Users</h2>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="mb-6">
+              {% for category, message in messages %}
+                <div class="flash px-4 py-3 rounded text-white font-medium
+                            {% if category == 'success' %} bg-green-500
+                            {% elif category == 'info' %} bg-green-500
+                            {% elif category == 'error' %} bg-red-500
+                            {% else %} bg-gray-500 {% endif %}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <!-- Add User Form -->
+        <form method="post" action="{{ url_for('add_user') }}" class="mb-10">
+            <div class="grid grid-cols-3 gap-4">
+                <input type="text" name="username" placeholder="Username" class="px-3 py-2 border rounded" required>
+                <input type="text" name="password" placeholder="Password" class="px-3 py-2 border rounded" required>
+                <input type="number" name="role_id" placeholder="Role ID" class="px-3 py-2 border rounded" required>
+            </div>
+            <button type="submit" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Add User</button>
+        </form>
+
+        <!-- Users Table -->
+        <table class="min-w-full bg-white border rounded">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4 border-b">User ID</th>
+                    <th class="py-2 px-4 border-b">Username</th>
+                    <th class="py-2 px-4 border-b">Password</th>
+                    <th class="py-2 px-4 border-b">Role ID</th>
+                    <th class="py-2 px-4 border-b">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr class="hover:bg-gray-50">
+                    <form method="post" action="{{ url_for('edit_user', user_id=user['UserID']) }}">
+                        <td class="py-2 px-4 border-b">{{ user['UserID'] }}</td>
+                        <td class="py-2 px-4 border-b">
+                            <input type="text" name="username" value="{{ user['Username'] }}" class="w-full px-2 py-1 border rounded">
+                        </td>
+                        <td class="py-2 px-4 border-b">
+                            <input type="text" name="password" value="{{ user['PasswordHash'] }}" class="w-full px-2 py-1 border rounded">
+                        </td>
+                        <td class="py-2 px-4 border-b">
+                            <input type="number" name="role_id" value="{{ user['RoleID'] }}" class="w-full px-2 py-1 border rounded">
+                        </td>
+                        <td class="py-2 px-4 border-b flex gap-2">
+                            <button type="submit" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 transition">Update</button>
+                    </form>
+                    <form method="post" action="{{ url_for('delete_user', user_id=user['UserID']) }}" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                        <button type="submit" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition">Delete</button>
+                    </form>
+                        </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('home') }}" class="block mt-8 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition text-center">Back to Dashboard</a>
+    </div>
+
+    <!-- Auto-dismiss flash messages -->
+    <script>
+      setTimeout(() => {
+        const flashMessages = document.querySelectorAll('.flash');
+        flashMessages.forEach(msg => {
+          msg.classList.add('fade-out');
+          setTimeout(() => msg.remove(), 500); // remove after fade
+        });
+      }, 4000);
+    </script>
+</body>
+</html>

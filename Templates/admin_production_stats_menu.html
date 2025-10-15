@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Production Stats</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="max-w-6xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-bold mb-6 text-center">Manage Production Stats</h2>
+
+        <!-- Add Stat Form -->
+        <form method="post" action="{{ url_for('add_production_stat') }}" class="mb-10">
+            <div class="grid grid-cols-5 gap-4">
+                <input type="number" name="year" placeholder="Year" class="px-3 py-2 border rounded" required>
+                <input type="number" name="country_id" placeholder="Country ID" class="px-3 py-2 border rounded" required>
+                <input type="number" name="mineral_id" placeholder="Mineral ID" class="px-3 py-2 border rounded" required>
+                <input type="number" step="0.1" name="production" placeholder="Production (tonnes)" class="px-3 py-2 border rounded" required>
+                <input type="number" step="0.01" name="export_value" placeholder="Export Value (Billion USD)" class="px-3 py-2 border rounded" required>
+            </div>
+            <button type="submit" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Add Stat</button>
+        </form>
+
+        <!-- Stats Table -->
+        <table class="min-w-full bg-white border rounded">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4 border-b">ID</th>
+                    <th class="py-2 px-4 border-b">Year</th>
+                    <th class="py-2 px-4 border-b">Country</th>
+                    <th class="py-2 px-4 border-b">Mineral</th>
+                    <th class="py-2 px-4 border-b">Production</th>
+                    <th class="py-2 px-4 border-b">Export Value</th>
+                    <th class="py-2 px-4 border-b">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat in stats %}
+                <tr class="hover:bg-gray-50">
+                    <form method="post" action="{{ url_for('edit_production_stat', stat_id=stat['StatID']) }}">
+                        <td class="py-2 px-4 border-b">{{ stat['StatID'] }}</td>
+                        <td class="py-2 px-4 border-b"><input type="number" name="year" value="{{ stat['Year'] }}" class="w-full px-2 py-1 border rounded"></td>
+                        <td class="py-2 px-4 border-b"><input type="number" name="country_id" value="{{ stat['CountryID'] }}" class="w-full px-2 py-1 border rounded"></td>
+                        <td class="py-2 px-4 border-b"><input type="number" name="mineral_id" value="{{ stat['MineralID'] }}" class="w-full px-2 py-1 border rounded"></td>
+                        <td class="py-2 px-4 border-b"><input type="number" step="0.1" name="production" value="{{ stat['Production_tonnes'] }}" class="w-full px-2 py-1 border rounded"></td>
+                        <td class="py-2 px-4 border-b"><input type="number" step="0.01" name="export_value" value="{{ stat['ExportValue_BillionUSD'] }}" class="w-full px-2 py-1 border rounded"></td>
+                        <td class="py-2 px-4 border-b flex gap-2">
+                            <button type="submit" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 transition">Update</button>
+                    </form>
+                    <form method="post" action="{{ url_for('delete_production_stat', stat_id=stat['StatID']) }}" onsubmit="return confirm('Are you sure you want to delete this stat?');">
+                        <button type="submit" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition">Delete</button>
+                    </form>
+                        </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('home') }}" class="block mt-8 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition text-center">Back to Dashboard</a>
+    </div>
+</body>
+</html>
