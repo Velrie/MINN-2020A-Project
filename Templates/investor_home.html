@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Investor Dashboard - African Critical Minerals App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-emerald-700 text-white px-6 py-4 flex justify-between items-center shadow-md">
+    <h1 class="text-xl font-bold">Investor Dashboard</h1>
+    <a href="{{ url_for('logout') }}" class="bg-white text-emerald-700 px-3 py-1 rounded-md font-semibold hover:bg-gray-200 transition">Logout</a>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto mt-10">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Welcome, Investor {{ username }}</h2>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- View Minerals -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">View Minerals</h3>
+        <p class="text-gray-600 mb-4">Explore available minerals and their properties.</p>
+        <a href="{{ url_for('show_minerals', role='investor') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">View</a>
+      </div>
+
+      <!-- Analyze Prices -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Analyze Prices</h3>
+        <p class="text-gray-600 mb-4">Visualize and compare historical price trends.</p>
+        <a href="{{ url_for('investor_analyze_prices') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Analyze</a>
+      </div>
+
+
+      <!-- Map View -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Map View</h3>
+        <p class="text-gray-600 mb-4">Explore African mineral sites on an interactive map.</p>
+        <a href="{{ url_for('show_mineral_sites_map', role='investor') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Open Map</a>
+      </div>
+
+      <!-- Country Profile -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Country Profile</h3>
+        <p class="text-gray-600 mb-4">View mining data by country.</p>
+        <a href="{{ url_for('view_country_profile', role='investor') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Explore</a>
+      </div>
+
+      <!-- Compare Countries -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Compare Countries</h3>
+        <p class="text-gray-600 mb-4">Compare mining performance across regions.</p>
+        <a href="{{ url_for('compare_countries', role='investor') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Compare</a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

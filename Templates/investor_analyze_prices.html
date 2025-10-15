@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Analyze Mineral Prices</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 p-4">
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+    <h2 class="text-xl font-bold mb-6 text-center">Mineral Price Analysis</h2>
+
+    <!-- Line Chart -->
+    <div class="mb-8">
+      <h3 class="text-lg font-semibold mb-2">Historical Price Trends</h3>
+      <div class="flex justify-center">
+        <canvas id="lineChart" width="600" height="300"></canvas>
+      </div>
+    </div>
+
+    <!-- Bar Chart -->
+    <div class="mb-8">
+      <h3 class="text-lg font-semibold mb-2">Latest Prices by Mineral</h3>
+      <div class="flex justify-center">
+        <canvas id="barChart" width="600" height="300"></canvas>
+      </div>
+    </div>
+
+    <!-- Pie Chart -->
+<div class="mb-6">
+  <h3 class="text-lg font-semibold mb-2 text-center">Share of Latest Prices</h3>
+  <div class="flex justify-center">
+    <div class="w-[350px] h-[350px]">
+      <canvas id="pieChart" width="350" height="350"></canvas>
+    </div>
+  </div>
+</div>
+
+
+  <script>
+    const data = {{ data|tojson }};
+    const latest = {{ latest|tojson }};
+
+    // Line Chart: Historical Prices
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    const lineData = {
+      labels: [...new Set(data.map(d => d.Year))],
+      datasets: [...new Set(data.map(d => d.MineralName))].map(name => ({
+        label: name,
+        data: data.filter(d => d.MineralName === name).map(d => d.PriceUSD_per_tonne),
+        fill: false,
+        borderColor: '#' + Math.floor(Math.random()*16777215).toString(16),
+        tension: 0.2,
+        pointRadius: 3,
+        pointHoverRadius: 5
+      }))
+    };
+    new Chart(lineCtx, {
+      type: 'line',
+      data: lineData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' },
+          tooltip: { mode: 'index', intersect: false }
+        },
+        scales: {
+          x: { title: { display: true, text: 'Year' } },
+          y: { title: { display: true, text: 'USD/tonne' } }
+        }
+      }
+    });
+
+    // Bar Chart: Latest Prices
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: latest.map(d => d.MineralName),
+        datasets: [{
+          label: 'Latest Price (USD/tonne)',
+          data: latest.map(d => d.PriceUSD_per_tonne),
+          backgroundColor: '#10b981'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true },
+          x: { title: { display: true, text: 'Mineral' } }
+        },
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+
+    // Pie Chart: Share of Latest Prices
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    const pieColors = [
+      '#1f77b4', '#ff7f0e', '#2ca02c', '#d62728',
+      '#9467bd', '#8c564b', '#e377c2', '#7f7f7f',
+      '#bcbd22', '#17becf'
+    ];
+    new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: latest.map(d => d.MineralName),
+        datasets: [{
+          data: latest.map(d => d.PriceUSD_per_tonne),
+          backgroundColor: pieColors.slice(0, latest.length)
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom' },
+          tooltip: {
+            callbacks: {
+              label: ctx => `${ctx.label}: $${ctx.parsed.toFixed(2)}`
+            }
+          }
+        }
+      }
+    });
+  </script>
+<!-- Back Button -->
+<div class="mt-10 text-center">
+  <a href="{{ url_for('home') }}" class="inline-block bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition">
+    ← Back to Dashboard
+  </a>
+</div>
+</body>
+</html>
+

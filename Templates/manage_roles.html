@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Roles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="max-w-5xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-bold mb-6 text-center">Manage Roles</h2>
+
+        <!-- Add Role Form -->
+        <form method="post" action="{{ url_for('add_role') }}" class="mb-10">
+            <div class="grid grid-cols-2 gap-4">
+                <input type="text" name="name" placeholder="Role Name" class="px-3 py-2 border rounded" required>
+                <input type="text" name="permissions" placeholder="Permissions" class="px-3 py-2 border rounded" required>
+            </div>
+            <button type="submit" class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">Add Role</button>
+        </form>
+
+        <!-- Roles Table -->
+        <table class="min-w-full bg-white border rounded">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="py-2 px-4 border-b">Role ID</th>
+                    <th class="py-2 px-4 border-b">Role Name</th>
+                    <th class="py-2 px-4 border-b">Permissions</th>
+                    <th class="py-2 px-4 border-b">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for role in roles %}
+                <tr class="hover:bg-gray-50">
+                    <form method="post" action="{{ url_for('edit_role', role_id=role['RoleID']) }}">
+                        <td class="py-2 px-4 border-b">{{ role['RoleID'] }}</td>
+                        <td class="py-2 px-4 border-b">
+                            <input type="text" name="name" value="{{ role['RoleName'] }}" class="w-full px-2 py-1 border rounded">
+                        </td>
+                        <td class="py-2 px-4 border-b">
+                            <input type="text" name="permissions" value="{{ role['Permissions'] }}" class="w-full px-2 py-1 border rounded">
+                        </td>
+                        <td class="py-2 px-4 border-b flex gap-2">
+                            <button type="submit" class="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 transition">Update</button>
+                    </form>
+                    <form method="post" action="{{ url_for('delete_role', role_id=role['RoleID']) }}" onsubmit="return confirm('Are you sure you want to delete this role?');">
+                        <button type="submit" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700 transition">Delete</button>
+                    </form>
+                        </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('home') }}" class="block mt-8 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500 transition text-center">Back to dashboard</a>
+    </div>
+</body>
+</html>
