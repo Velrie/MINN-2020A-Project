@@ -50,6 +50,7 @@ AfricanCriticalMineralsApp/
 3. **Access in browser:**
     ```
     http://127.0.0.1:5000
+    # This is a development server.
     ```
     
   # License
