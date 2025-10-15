@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - African Critical Minerals App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="bg-emerald-700 text-white px-6 py-4 flex justify-between items-center shadow-md">
+    <h1 class="text-xl font-bold">Admin Dashboard</h1>
+    <a href="{{ url_for('logout') }}" class="bg-white text-emerald-700 px-3 py-1 rounded-md font-semibold hover:bg-gray-200 transition">Logout</a>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto mt-10">
+    <h2 class="text-3xl font-bold text-gray-800 mb-6">Welcome, Admin {{ username }}</h2>
+
+    <!-- Action Cards -->
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- Manage Roles -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Manage Roles</h3>
+        <p class="text-gray-600 mb-4">Define and update user roles and permissions.</p>
+        <a href="{{ url_for('view_roles') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Go</a>
+      </div>
+
+      <!-- Manage Users -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Manage Users</h3>
+        <p class="text-gray-600 mb-4">Add, edit, or remove users and assign roles.</p>
+        <a href="{{ url_for('view_users') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Go</a>
+      </div>
+
+      <!-- Manage Minerals -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Manage Minerals</h3>
+        <p class="text-gray-600 mb-4">Update mineral types and production details.</p>
+        <a href="{{ url_for('view_minerals') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Go</a>
+      </div>
+
+      <!-- Manage Countries -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Manage Countries</h3>
+        <p class="text-gray-600 mb-4">Edit country profiles and regional data.</p>
+        <a href="{{ url_for('view_countries') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Go</a>
+      </div>
+
+      <!-- Manage Sites -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Manage Sites</h3>
+        <p class="text-gray-600 mb-4">Add, edit, or remove mining sites and update production data.</p>
+        <a href="{{ url_for('view_sites') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Go</a>
+      </div>
+
+
+      <!-- Manage Production Stats -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Manage Production Stats</h3>
+        <p class="text-gray-600 mb-4">Add, edit, or remove production data.</p>
+        <a href="{{ url_for('view_production_stats') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Go</a>
+      </div>
+
+      <!-- Manage Mineral Prices -->
+      <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-2xl transition">
+        <h3 class="text-xl font-semibold mb-2">Manage Mineral Prices</h3>
+        <p class="text-gray-600 mb-4">View and update historical price data.</p>
+        <a href="{{ url_for('view_mineral_prices') }}" class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition">Go</a>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
