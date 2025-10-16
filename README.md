@@ -28,8 +28,6 @@ AfricanCriticalMineralsApp/
 │   ├── login.html
 │   ├── dashboard.html
 │   └── map.html
-├── static/
-│   └── (CSS/JS files)
 ├── data/
 │   └── minerals.db
 └── .venv/
