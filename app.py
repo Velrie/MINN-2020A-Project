@@ -468,9 +468,9 @@ def delete_mineral_price(price_id):
     flash(f"Mineral price deleted successfully.", "success")
     return redirect(url_for('view_mineral_prices'))
 
-# -------------------------
+
 # Admin: Manage Roles
-# -------------------------
+
 @app.route('/admin/roles', methods=['GET'])
 def view_roles():
     conn = get_db_connection()
@@ -510,7 +510,7 @@ def delete_role(role_id):
     return redirect(url_for('view_roles'))
 
 # -------------------------
-# Admin: Shared Menus
+# Admin: Shared Menus that everyon can access
 # -------------------------
 
 @app.route('/<role>/minerals')
@@ -933,3 +933,4 @@ def logout():
 if __name__ == '__main__':
     app.run(debug=True)
     
+
